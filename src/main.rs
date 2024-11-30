@@ -1,9 +1,13 @@
 use std::fs::{self, File};
-use std::io;
 use std::path::Path;
+use std::io;
 use std::process::{Command, Stdio};
 
 fn main() -> io::Result<()> {
+    const GREEN: &str = "\x1b[32m";
+    const RED: &str = "\x1b[31m";
+    const RESET: &str = "\x1b[0m";
+
     let input_dir = "inputs";
     let output_dir = "outputs";
     let solution_file = "solution.cpp";
@@ -43,9 +47,9 @@ fn main() -> io::Result<()> {
         let expected_output = fs::read_to_string(&output_path)?;
 
         if program_output.trim() == expected_output.trim() {
-            println!("Test case {} passed!", file_stem);
+            println!("{}Test case {} passed!{}", GREEN, file_stem, RESET);
         } else {
-            println!("Test case {} failed!", file_stem);
+            println!("{}Test case {} failed!{}", RED, file_stem, RESET);
             println!("Expected:\n{}", expected_output);
             println!("Got:\n{}", program_output);
         }
